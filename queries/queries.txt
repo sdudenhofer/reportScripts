@@ -1,0 +1,71 @@
+[ADMIT]
+SELECT t01.hssvc, t01.patno, t01.pname, t01.isadate, t02.room, t02.bed, t02.nurst 
+FROM hospf062.patients t01 LEFT OUTER JOIN hospf062.rmbed t02 ON t01.patno = t02.pat# 
+WHERE t01.isadate = '" + yesterday + "' and t02.nurst !='NULL' AND HSsvc !='OBS' ORDER BY t01.hssvc
+query2 = " SELECT t01.hssvc, t01.patno, t01.pname, t01.isadate, t02.room, t02.bed, t02.nurst 
+FROM hospf062.patients t01 LEFT OUTER JOIN hospf062.rmbed t02 ON t01.patno = t02.pat# 
+WHERE t01.isadate = '" + yesterday + "' and t02.nurst !='NULL' AND HSsvc = 'OBS' ORDER BY t01.hssvc
+
+[BEDCOUNT]
+select nurst, room, bed, pat# from hospf062.rmbed
+
+[BRAULTDEMO]
+select t01.patno, t01.hstnum, t01.isadate, t01.isddate, t01.pname,
+t01.isdob, t01.sex, t02.race, t02.martl, t02.ssn, t02.padr1, 
+t02.padr2, t02.hcity, t02.zip, t02.harcd, t02.phone, t02.c1nam,
+t02.c1rel, t02.c1arc, t02.c1phn, t01.nwattphy, t05.phname, 
+t01.nwrefdoc, t05.phname, t01.diagn, t01.nwdocnum, t05.phname,
+t01.ains1, t01.apln1, t01.ains2, t01.apln2, t01.ains3, t01.apln3,
+t06.policy, t06.iname, t06.reln, 
+t10.ibinam, t10.ibiadr, 
+t10.ibiad2, t10.ibicty, t10.ibstat, t10.ibarcd, t10.ibphn1, 
+t10.ibphn2, t10.ibizip, 
+t07.policy, t07.iname, t07.reln,
+t11.ibinam, t11.ibiadr, t11.ibiad2, 
+t11.ibicty, t11.ibstat, t11.ibarcd, t11.ibphn1, t11.ibphn2, t11.ibizip,
+t09.policy, t09.iname, t09.reln, t08.ibinam, t08.ibiadr, t08.ibiad2, 
+t08.ibicty, t08.ibstat, t08.ibarcd, t08.ibphn1, t08.ibphn2, t08.ibizip
+FROM hospf062.patients t01 
+inner join hospf062.pathist t02 on t02.histn=t01.hstnum 
+inner join hospf062.phymast t05 on t01.nwattphy=t05.nwdrnum 
+inner join hospf062.admreg t12 on t01.patno=t12.patno
+INNER join hospf062.benefits t06 on t01.patno=t06.patno and t06.histn=t02.histn and t02.ains1=t06.insco and t01.ains1=t06.insco 
+left join hospf062.benefits t07 on t01.patno=t07.patno and t07.histn=t02.histn and t02.ains2=t07.insco and t01.ains2=t07.insco 
+left join hospf062.benefits t09 on t01.patno=t09.patno and t09.histn=t02.histn and t02.ains3=t09.insco 
+inner JOIN hospf062.benext t10 on t06.patno=t10.patno and t10.seqno=t06.seqno 
+left join hospf062.benext t11 on t07.patno=t11.patno and t11.seqno=t07.seqno
+left join hospf062.benext t08 on t09.patno=t08.patno and t08.seqno=t09.seqno
+WHERE t12.admhsv='EOP' and t01.isadate='" + demo_date + '
+
+[BRAULTCENSUS]
+SELECT t01.isadate, t01.iatme, t01.isddate, t01.dtime, t01.pname,
+t01.age, t01.sex, t02.padr1, t01.dcstat, t01.diagn, t04.phname,
+t04.nwdrnum, t01.hstnum, t01.patno, t01.isdob FROM hospf062.patients
+t01 INNER JOIN hospf062.pathist t02 on t01.hstnum=t02.histn 
+INNER JOIN hospf062.admreg t03 on t01.patno=t03.patno and 
+t02.histn=t03.hstnum INNER JOIN hospf062.phymast t04 
+ON t04.nwdrnum=t03.nwdrnum WHERE t03.admhsv = 
+'EOP' and t01.isadate = '" + census_date + "'"
+
+[CCUCENSUS]
+select t01.room, t01.bed, t01.pat#, t02.pname, t02.diagn  from hospf062.rmbed t01 
+LEFT OUTER JOIN hospf062.patients t02 on t01.pat# = t02.patno 
+where t01.nurst = 'CCU' and t01.pat# > '0' order by t01.room, t01.bed
+
+[CENSUS]
+SELECT T01.NURST, T01.ROOM, T01.BED, T01.OBSERV, T02.PNAME, T02.AGE, T02.DIAGN, T03.PHNAME 
+FROM HOSPF062.RMBED T01 LEFT OUTER JOIN HOSPF062.PATIENTS T02 ON T01.PAT# = T02.PATNO 
+LEFT OUTER JOIN HOSPF062.PHYMAST T03 ON T02.NWDOCNUM = T03.NWDRNUM 
+WHERE NURST != 'SSU' AND NURST != 'EOP' AND PAT# > 0 ORDER BY NURST
+
+[COUNTY]
+select t02.pname, t02.dob, t06.rdisvfdt, t06.rdrs from 
+orderf062.oeorder t01 left outer join hospf062.patients t02 on t01.opat# = t02.patno 
+left outer join orderf062.oeostat t04 on t01.ostat = t04.stat# 
+left outer join orderf062.rd t06 on t02.patno = t06.rdpt# 
+where oproc in ('COVID-19', 'COVID-LC', 'COVID-QL', 'COVID-CM', 'COVID-RO') 
+and t02.patno not in ('4106640', '4106643', '4123971', '4123972', '4112283', '4112287',  '4112284')
+and t06.rdrs != ''
+and rdpf = '" + t + "'
+and rdrs not in ('OR PUB.HLTH.LAB', 'LABCORP', 'CALL IF NEG', '        LABCORP', 'CALL IF POS', '*', '              *')
+ORDER BY t01.osdate
