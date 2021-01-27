@@ -16,15 +16,15 @@ import time
 import logging
 
 config = configparser.ConfigParser()
-config.read('/home/itadmin/automation/config.ini')
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-pwd = config['AS400']['PASS']
+config.read('config.ini')
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+pwd = config['MHD']['PASS']
 eserv = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
 
-logging.basicConfig(filename='/home/itadmin/logs/admit.log', format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
+#logging.basicConfig(filename='/home/itadmin/logs/admit.log', format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
 
 count=0
 while(count <= 2):
@@ -32,7 +32,7 @@ while(count <= 2):
         conn = pyodbc.connect(DSN=server, UID=user, PWD=pwd)
         count = 4
     except pyodbc.Error as e:
-        logging.info("DB Error: " + str(e))
+        #logging.info("DB Error: " + str(e))
         print("DB ERROR SLEEP 2 minutes tried " + str(count) + " times")
         time.sleep(120)
         count = count + 1
@@ -43,7 +43,7 @@ d = today - c
 yesterday = d.strftime("%Y-%m-%d")
 day = today.strftime('%Y-%m-%d')
 
-writer = pd.ExcelWriter('/home/itadmin/automation/files/admit-report-' + str(day) + '.xlsx', engine='openpyxl')
+writer = pd.ExcelWriter('admit-report-' + str(day) + '.xlsx', engine='openpyxl')
 query = "SELECT t01.hssvc, t01.patno, t01.pname, t01.isadate, t02.room, t02.bed, t02.nurst \
 FROM hospf0062.patients t01 LEFT OUTER JOIN hospf0062.rmbed t02 ON t01.patno = t02.pat# \
 WHERE t01.isadate = '" + yesterday + "' and t02.nurst !='NULL' AND HSsvc !='OBS' ORDER BY t01.hssvc"
@@ -62,12 +62,13 @@ writer.save()
     # setup and send emails
 msg = MIMEMultipart()
 msg['Subject'] = "Admission Report For: " + str(day)
-recipients = ['setdud@mckweb.com', 'RBootes@MCKWeb.com', 'AneHum@MCKweb.com', 'EriMcc@mckweb.com']
-for to in recipients:
-    msg['To'] = to
+recipients = ['setdud@mckweb.com']
+#, 'RBootes@MCKWeb.com', 'AneHum@MCKweb.com', 'EriMcc@mckweb.com']
+#for to in recipients:
+#    msg['To'] = to
 
 attachment = MIMEBase('application','octet-stream')
-f = '/home/itadmin/automation/files/admit-report-' + str(day) + '.xlsx'
+f = 'admit-report-' + str(day) + '.xlsx'
 
 msg.attach(MIMEText("Report Attached"))
 attachment.set_payload(open(f, 'rb').read())
