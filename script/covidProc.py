@@ -17,9 +17,9 @@ logging.basicConfig(filename='/home/itadmin/logs/covidProc.log', format='%(ascti
 
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-password = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+password = config['MHD']['PASS']
 eserv = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
@@ -38,10 +38,10 @@ for i in range(0, 10):
 today = datetime.datetime.now()
 query = "select t01.oproc, t05.hssvc, t02.patno, t02.pname, t03.room, t03.bed, t03.nurst, t01.osdate, \
 t04.stdsc, t01.oisrdate from \
-orderf062.oeorder t01 left outer join hospf062.patients t02 on t01.opat# = t02.patno \
-left outer join hospf062.rmbed t03 on t01.opat# = t03.pat# and t02.patno = t03.pat# \
-left outer join orderf062.oeostat t04 on t01.ostat = t04.stat# \
-left outer join hospf062.patients t05 on t01.opat# = t05.patno \
+orderf0)62.oeorder t01 left outer join hospf0062.patients t02 on t01.opat# = t02.patno \
+left outer join hospf0062.rmbed t03 on t01.opat# = t03.pat# and t02.patno = t03.pat# \
+left outer join orderf0062.oeostat t04 on t01.ostat = t04.stat# \
+left outer join hospf0062.patients t05 on t01.opat# = t05.patno \
 where oproc in ('COVID-19', 'COVID-LC', 'COVID-QL', 'COVID-CM', 'COVID-RO') \
 and t02.patno != '4106640' and t02.patno != '4106643' ORDER BY t01.osdate"
 

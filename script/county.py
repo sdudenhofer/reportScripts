@@ -20,9 +20,9 @@ logging.basicConfig(filename='/home/itadmin/logs/county.log', format='%(asctime)
 
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-pword = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+pword = config['MHD']['PASS']
 eserv = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
@@ -46,9 +46,9 @@ tests = open('/home/itadmin/automation/test.txt', 'r')
 for test in tests:
     t = test.rstrip()
     query = "select t02.pname, t02.dob, t06.rdisvfdt, t06.rdrs from \
-        orderf062.oeorder t01 left outer join hospf062.patients t02 on t01.opat# = t02.patno \
-        left outer join orderf062.oeostat t04 on t01.ostat = t04.stat# \
-        left outer join orderf062.rd t06 on t02.patno = t06.rdpt# \
+        orderf0062.oeorder t01 left outer join hospf0062.patients t02 on t01.opat# = t02.patno \
+        left outer join orderf0062.oeostat t04 on t01.ostat = t04.stat# \
+        left outer join orderf0062.rd t06 on t02.patno = t06.rdpt# \
         where oproc in ('COVID-19', 'COVID-LC', 'COVID-QL', 'COVID-CM', 'COVID-RO') \
         and t02.patno not in ('4106640', '4106643', '4123971', '4123972', '4112283', '4112287',  '4112284')\
         and t06.rdrs != ''\

@@ -21,9 +21,9 @@ import ftplib
 
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-pword = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+pword = config['MHD']['PASS']
 fserver = config['FTP']['SERVER']
 fuser = config['FTP']['USER']
 fpass = config['FTP']['PASS']
@@ -45,7 +45,7 @@ except pyodbc.Error as e:
     print(e)
     sleep(60)
 
-query = "select nurst, room, bed, pat# from hospf062.rmbed"
+query = "select nurst, room, bed, pat# from hospf0062.rmbed"
 cursor = conn.cursor()
 data = cursor.execute(query)
 array = []

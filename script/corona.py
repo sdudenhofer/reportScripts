@@ -18,9 +18,9 @@ logging.basicConfig(filename='/home/itadmin/logs/corona.log', format='%(asctime)
 
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-password = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+password = config['MHD']['PASS']
 eserv = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
@@ -35,14 +35,14 @@ except pyodbc.OperationalError as e:
 data_check = open('/home/itadmin/automation/files/coronavirus.txt', 'w+')
 query = "SELECT \
                 t01.patno \
-                FROM HOSPF062.PATIENTS T01 LEFT OUTER JOIN \
-                HOSPF062.CDNOTETB T02 \
+                FROM HOSPF0062.PATIENTS T01 LEFT OUTER JOIN \
+                HOSPF0062.CDNOTETB T02 \
                 ON T02.ENCID = T01.PATNO LEFT OUTER JOIN \
-                HOSPF062.CDNTEATB T03 \
+                HOSPF0062.CDNTEATB T03 \
                 ON T02.ENCID = T03.ENCTRID \
                 AND T02.CREATEBY = T03.LSTMODBY \
                 AND T03.ENCTRID = T01.PATNO LEFT OUTER JOIN \
-                hospf062.rmbed t04 on t04.pat# = t01.patno \
+                hospf0062.rmbed t04 on t04.pat# = t01.patno \
                 WHERE T01.isadate > '2020-02-28' and t02.titl like 'Coronavirus%'"
 
 cursor = conn.cursor()
@@ -54,8 +54,8 @@ for number in pnumber:
     array_pnumber.append(n)
     data_check.write(str(number) + "\n")
 
-query2 = "select t01.pat#, t02.isadate, t01.nurst, t01.room, t01.bed  from hospf062.rmbed t01 \
-left outer join hospf062.patients t02 on t01.pat# = t02.patno where \
+query2 = "select t01.pat#, t02.isadate, t01.nurst, t01.room, t01.bed  from hospf0062.rmbed t01 \
+left outer join hospf0062.patients t02 on t01.pat# = t02.patno where \
 nurst != 'DIAG' and nurst != 'NUR' and nurst != 'WHBC' and nurst != 'CVPR' \
 and nurst != 'EOP' and PAT# > 0 ORDER BY NURST"
 

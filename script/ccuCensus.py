@@ -17,9 +17,9 @@ logging.basicConfig(filename="/home/itadmin/logs/ccucensus.log", format='%(ascti
 
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-pword = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+pword = config['MHD']['PASS']
 eserv = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
@@ -30,8 +30,8 @@ except pyodbc.Error as e:
     logging.INFO(e)
     sleep(60)
 
-query = "select t01.room, t01.bed, t01.pat#, t02.pname, t02.diagn  from hospf062.rmbed t01 \
-LEFT OUTER JOIN hospf062.patients t02 on t01.pat# = t02.patno \
+query = "select t01.room, t01.bed, t01.pat#, t02.pname, t02.diagn  from hospf0062.rmbed t01 \
+LEFT OUTER JOIN hospf0062.patients t02 on t01.pat# = t02.patno \
 where t01.nurst = 'CCU' and t01.pat# > '0' order by t01.room, t01.bed"
 
 cursor = conn.cursor()
