@@ -14,9 +14,9 @@ import os
 
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-password = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+password = config['MHD']['PASS']
 eserv = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
@@ -30,10 +30,10 @@ b = day - a
 yesterday = b.strftime('%y%m%d')
 
 query = "SELECT t01.iapnam, t02.harcd, t02.phone, t03.rdts, t03.rdrs, t04.osdate \
-from hospf062.indaccum t01 left outer join \
-hospf062.pathist t02 on t01.iahst# = t02.histn left outer join \
-orderf062.rd t03 on t01.iaord# = t03.rdor# and t01.iaacct = t03.rdpt# left outer join \
-orderf062.oeorder t04 on t01.iaacct = t04.opat# and t01.iaord# = t04.oord# \
+from hospf0062.indaccum t01 left outer join \
+hospf0062.pathist t02 on t01.iahst# = t02.histn left outer join \
+orderf0062.rd t03 on t01.iaord# = t03.rdor# and t01.iaacct = t03.rdpt# left outer join \
+orderf0062.oeorder t04 on t01.iaacct = t04.opat# and t01.iaord# = t04.oord# \
 Where t04.optlst = 'MWMC' and t03.rdts = 'COV-CM' and t04.osdate = '" + yesterday + "' order by t04.osdate"
 
 

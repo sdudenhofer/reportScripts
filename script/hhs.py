@@ -35,11 +35,11 @@ except pyodbc.Error as e:
 query_total_flu = "select t01.oproc, t05.hssvc, t02.patno, t02.pname, t05.isadate, \
 t03.room, t03.bed, t03.nurst, t01.osdate, \
     t04.stdsc, t01.oisrdate, t06.rdrs from \
-    orderf062.oeorder t01 left outer join hospf062.patients t02 on t01.opat# = t02.patno \
-    left outer join hospf062.rmbed t03 on t01.opat# = t03.pat# and t02.patno = t03.pat# \
-    left outer join orderf062.oeostat t04 on t01.ostat = t04.stat# \
-    left outer join hospf062.patients t05 on t01.opat# = t05.patno \
-    left outer join orderf062.rd t06 on t01.opat# = t06.rdpt# and t01.oord# = t06.rdor# \
+    orderf0062.oeorder t01 left outer join hospf0062.patients t02 on t01.opat# = t02.patno \
+    left outer join hospf0062.rmbed t03 on t01.opat# = t03.pat# and t02.patno = t03.pat# \
+    left outer join orderf0062.oeostat t04 on t01.ostat = t04.stat# \
+    left outer join hospf0062.patients t05 on t01.opat# = t05.patno \
+    left outer join orderf0062.rd t06 on t01.opat# = t06.rdpt# and t01.oord# = t06.rdor# \
     where oproc = 'INFLUPCR' and t06.rdrs != ' ' and t06.rdrs = 'POSITIVE' \
     and t05.hssvc != 'EOP' and stdsc != 'CANCELLED' and t03.nurst != 'NULL' \
     ORDER BY t05.isadate"
@@ -47,11 +47,11 @@ t03.room, t03.bed, t03.nurst, t01.osdate, \
 query_flu_admit = "select t01.oproc, t05.hssvc, t02.patno, t02.pname, t05.isadate, \
 t03.room, t03.bed, t03.nurst, t01.osdate, \
     t04.stdsc, t01.oisrdate, t06.rdrs from \
-    orderf062.oeorder t01 left outer join hospf062.patients t02 on t01.opat# = t02.patno \
-    left outer join hospf062.rmbed t03 on t01.opat# = t03.pat# and t02.patno = t03.pat# \
-    left outer join orderf062.oeostat t04 on t01.ostat = t04.stat# \
-    left outer join hospf062.patients t05 on t01.opat# = t05.patno \
-    left outer join orderf062.rd t06 on t01.opat# = t06.rdpt# and t01.oord# = t06.rdor# \
+    orderf0062.oeorder t01 left outer join hospf0062.patients t02 on t01.opat# = t02.patno \
+    left outer join hospf0062.rmbed t03 on t01.opat# = t03.pat# and t02.patno = t03.pat# \
+    left outer join orderf0062.oeostat t04 on t01.ostat = t04.stat# \
+    left outer join hospf0062.patients t05 on t01.opat# = t05.patno \
+    left outer join orderf0062.rd t06 on t01.opat# = t06.rdpt# and t01.oord# = t06.rdor# \
     where oproc = 'INFLUPCR' and t06.rdrs != ' ' and t06.rdrs = 'POSITIVE' \
     and t05.hssvc != 'EOP' and stdsc != 'CANCELLED' and t03.nurst != 'NULL' \
     and t05.isadate = CURRENT DATE-1 DAYS \
@@ -60,11 +60,11 @@ t03.room, t03.bed, t03.nurst, t01.osdate, \
 query_flu_icu = "select t01.oproc, t05.hssvc, t02.patno, t02.pname, t05.isadate, \
 t03.room, t03.bed, t03.nurst, t01.osdate, \
     t04.stdsc, t01.oisrdate, t06.rdrs from \
-    orderf062.oeorder t01 left outer join hospf062.patients t02 on t01.opat# = t02.patno \
-    left outer join hospf062.rmbed t03 on t01.opat# = t03.pat# and t02.patno = t03.pat# \
-    left outer join orderf062.oeostat t04 on t01.ostat = t04.stat# \
-    left outer join hospf062.patients t05 on t01.opat# = t05.patno \
-    left outer join orderf062.rd t06 on t01.opat# = t06.rdpt# and t01.oord# = t06.rdor# \
+    orderf0062.oeorder t01 left outer join hospf0062.patients t02 on t01.opat# = t02.patno \
+    left outer join hospf0062.rmbed t03 on t01.opat# = t03.pat# and t02.patno = t03.pat# \
+    left outer join orderf0062.oeostat t04 on t01.ostat = t04.stat# \
+    left outer join hospf0062.patients t05 on t01.opat# = t05.patno \
+    left outer join orderf0062.rd t06 on t01.opat# = t06.rdpt# and t01.oord# = t06.rdor# \
     where oproc = 'INFLUPCR' and t06.rdrs != ' '  and t06.rdrs = 'POSITIVE' and t03.nurst = 'CCU' \
     and  t01.osdate >= '201022' and stdsc != 'CANCELLED' \
     ORDER BY t01.osdate"
@@ -72,11 +72,11 @@ t03.room, t03.bed, t03.nurst, t01.osdate, \
 query_covid = "select t01.oproc, t05.hssvc, t02.patno, t02.pname, t03.room, \
     t03.bed, t03.nurst, t01.osdate, \
     t04.stdsc, t01.oisrdate, t06.rdrs from \
-    orderf062.oeorder t01 left outer join hospf062.patients t02 on t01.opat# = t02.patno \
-    left outer join hospf062.rmbed t03 on t01.opat# = t03.pat# and t02.patno = t03.pat# \
-    left outer join orderf062.oeostat t04 on t01.ostat = t04.stat# \
-    left outer join hospf062.patients t05 on t01.opat# = t05.patno \
-    left outer join orderf062.rd t06 on t01.opat# = t06.rdpt# and t01.oord# = t06.rdor# \
+    orderf0062.oeorder t01 left outer join hospf0062.patients t02 on t01.opat# = t02.patno \
+    left outer join hospf0062.rmbed t03 on t01.opat# = t03.pat# and t02.patno = t03.pat# \
+    left outer join orderf0062.oeostat t04 on t01.ostat = t04.stat# \
+    left outer join hospf0062.patients t05 on t01.opat# = t05.patno \
+    left outer join orderf0062.rd t06 on t01.opat# = t06.rdpt# and t01.oord# = t06.rdor# \
     where oproc in ('COVID-19', 'COVID-LC', 'COVID-QL', 'COVID-CM', 'COVID-RO') \
     and t02.patno != '4106640' and t02.patno != '4106643' \
     and t03.nurst != '' and t06.rdrs like 'POS SARS%' \
@@ -85,13 +85,13 @@ query_covid = "select t01.oproc, t05.hssvc, t02.patno, t02.pname, t03.room, \
 query_flu_deaths = "SELECT T01.HSSVC, T01.PATNO, T01.PNAME, T01.AGE, T01.SEX, \
                 T01.ISADATE, T01.IATME, T01.DIAGN, \
                 T01.ISDDATE, T01.DTIME, T03.DCSDS, T03.DCEXP, t04.room, t04.bed, t05.nurst \
-      FROM      HOSPF062.PATIENTS T01 LEFT OUTER JOIN \
-                HOSPF062.DSSTAT T03 \
+      FROM      HOSPF0062.PATIENTS T01 LEFT OUTER JOIN \
+                HOSPF0062.DSSTAT T03 \
       ON        T01.DCSTAT = T03.DCUBS \
-        LEFT OUTER JOIN hospf062.patrmbdp t04 ON t01.patno = t04.patn15 \
-            LEFT OUTER JOIN hospf062.rmbed t05 on t01.patno = t05.pat# \
-            left outer join orderf062.oeorder t07 on t01.patno = t07.opat# \
-            left outer join orderf062.rd t06 on t01.patno = t06.rdpt# and t06.rdor# = t07.oord# \
+        LEFT OUTER JOIN hospf0062.patrmbdp t04 ON t01.patno = t04.patn15 \
+            LEFT OUTER JOIN hospf0062.rmbed t05 on t01.patno = t05.pat# \
+            left outer join orderf0062.oeorder t07 on t01.patno = t07.opat# \
+            left outer join orderf0062.rd t06 on t01.patno = t06.rdpt# and t06.rdor# = t07.oord# \
       WHERE     T01.HSSVC IN ('SIP', 'MIP', 'ICU', 'GYN', 'CCU', 'PED', 'OBS', 'OBI', 'NUR') \
         AND     ISDDATE = CURRENT DATE - 1 DAYS AND T03.DCEXP = 'Y' and t07.oproc = 'INFLUPCR' \
         and t06.rdrs = 'POSITIVE' \
@@ -100,13 +100,13 @@ query_flu_deaths = "SELECT T01.HSSVC, T01.PATNO, T01.PNAME, T01.AGE, T01.SEX, \
 query_covid_death = "SELECT T01.HSSVC, T01.PATNO, T01.PNAME, T01.AGE, T01.SEX, \
                 T01.ISADATE, T01.IATME, T01.DIAGN, \
                 T01.ISDDATE, T01.DTIME, T03.DCSDS, T03.DCEXP, t04.room, t04.bed, t05.nurst \
-      FROM      HOSPF062.PATIENTS T01 LEFT OUTER JOIN \
-                HOSPF062.DSSTAT T03 \
+      FROM      HOSPF0062.PATIENTS T01 LEFT OUTER JOIN \
+                HOSPF0062.DSSTAT T03 \
       ON        T01.DCSTAT = T03.DCUBS \
-        LEFT OUTER JOIN hospf062.patrmbdp t04 ON t01.patno = t04.patn15 \
-            LEFT OUTER JOIN hospf062.rmbed t05 on t01.patno = t05.pat# \
-            left outer join orderf062.rd t06 on t01.patno = t06.rdpt# \
-            left outer join orderf062.oeorder t07 on t01.patno = t07.opat# \
+        LEFT OUTER JOIN hospf0062.patrmbdp t04 ON t01.patno = t04.patn15 \
+            LEFT OUTER JOIN hospf0062.rmbed t05 on t01.patno = t05.pat# \
+            left outer join orderf0062.rd t06 on t01.patno = t06.rdpt# \
+            left outer join orderf0062.oeorder t07 on t01.patno = t07.opat# \
       WHERE     T01.HSSVC IN ('SIP', 'MIP', 'ICU', 'GYN', 'CCU', 'PED', 'OBS', 'OBI', 'NUR') \
         AND     ISDDATE = CURRENT DATE - 1 DAYS AND T03.DCEXP = 'Y' and t07.oproc in \
         ('COVID-19', 'COVID-LC', 'COVID-QL', 'COVID-CM', 'COVID-RO') \

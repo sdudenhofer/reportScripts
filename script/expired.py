@@ -18,9 +18,9 @@ logging.basicConfig(filename="/home/itadmin/logs/expired.log", format='%(asctime
 
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-pwd = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+pwd = config['MHD']['PASS']
 eserv = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
@@ -45,10 +45,10 @@ day = today.strftime('%Y-%m-%d')
 query = "SELECT T01.HSSVC, T01.PATNO, T01.PNAME, T01.AGE, T01.SEX,\
             T01.ISADATE, T01.IATME, T01.DIAGN,\
             T01.ISDDATE, T01.DTIME, T03.DCSDS, T03.DCEXP, t04.room, t04.bed\
-    FROM      HOSPF062.PATIENTS T01 LEFT OUTER JOIN\
-            HOSPF062.DSSTAT T03\
+    FROM      HOSPF0062.PATIENTS T01 LEFT OUTER JOIN\
+            HOSPF0062.DSSTAT T03\
     ON        T01.DCSTAT = T03.DCUBS\
-    LEFT OUTER JOIN hospf062.patrmbdp t04 ON t01.patno = t04.patn15\
+    LEFT OUTER JOIN hospf0062.patrmbdp t04 ON t01.patno = t04.patn15\
     WHERE ISDDATE = '" + yesterday + "' AND T03.DCEXP = 'Y' AND RECID='Y' \
     ORDER BY  T01.PNAME ASC"
 
