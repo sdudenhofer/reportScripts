@@ -17,9 +17,9 @@ import logging
 
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-password = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+password = config['MHD']['PASS']
 eserv = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
@@ -33,8 +33,8 @@ yesterday = b.strftime("%Y-%m-%d")
 day = b.strftime("%Y-%m-%d")
 writer = pd.ExcelWriter('/home/itadmin/automation/files/community-test-' + str(day) + '.xlsx', engine='openpyxl')
 
-query = "select t01.patno, t01.pname, t01.isadate, t02.phname  from hospf062.patients t01 \
-left outer join hospf062.phymast t02 on t01.nwattphy = t02.nwdrnum \
+query = "select t01.patno, t01.pname, t01.isadate, t02.phname  from hospf0062.patients t01 \
+left outer join hospf0062.phymast t02 on t01.nwattphy = t02.nwdrnum \
 where hssvc = 'RE2' and t01.isadate = '" + yesterday + "' order by t02.phname"
 
 for i in range(0, 10):
