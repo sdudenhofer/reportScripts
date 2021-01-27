@@ -45,10 +45,10 @@ day = today.strftime('%Y-%m-%d')
 
 writer = pd.ExcelWriter('/home/itadmin/automation/files/admit-report-' + str(day) + '.xlsx', engine='openpyxl')
 query = "SELECT t01.hssvc, t01.patno, t01.pname, t01.isadate, t02.room, t02.bed, t02.nurst \
-FROM hospf062.patients t01 LEFT OUTER JOIN hospf062.rmbed t02 ON t01.patno = t02.pat# \
+FROM hospf0062.patients t01 LEFT OUTER JOIN hospf0062.rmbed t02 ON t01.patno = t02.pat# \
 WHERE t01.isadate = '" + yesterday + "' and t02.nurst !='NULL' AND HSsvc !='OBS' ORDER BY t01.hssvc"
 query2 = " SELECT t01.hssvc, t01.patno, t01.pname, t01.isadate, t02.room, t02.bed, t02.nurst \
-FROM hospf062.patients t01 LEFT OUTER JOIN hospf062.rmbed t02 ON t01.patno = t02.pat# \
+FROM hospf0062.patients t01 LEFT OUTER JOIN hospf0062.rmbed t02 ON t01.patno = t02.pat# \
 WHERE t01.isadate = '" + yesterday + "' and t02.nurst !='NULL' AND HSsvc = 'OBS' ORDER BY t01.hssvc"
     # add error handling to sql query
 data = pd.read_sql(query, conn)
