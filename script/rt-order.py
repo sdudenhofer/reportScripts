@@ -17,9 +17,9 @@ import logging
 
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-pwd = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+pwd = config['MHD']['PASS']
 eserv = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
@@ -33,12 +33,12 @@ query = """
 SELECT
   ALL       T03.NURST, T03.ROOM CONCAT '-' CONCAT T03.BED AS RB, T01.PATNO,
             T01.PNAME, T02.OSDATE, T02.OSTIME, T02.OORD#, T02.OPROC, T04.POVDSC
-  FROM      HOSPF062.PATIENTS T01 LEFT OUTER JOIN
-            ORDERF062.OEORDER T02
+  FROM      HOSPF0062.PATIENTS T01 LEFT OUTER JOIN
+            ORDERF0062.OEORDER T02
   ON        T01.PATNO = T02.OPAT# LEFT OUTER JOIN
-            HOSPF062.RMBED T03
+            HOSPF0062.RMBED T03
   ON        T01.PATNO = T03.PAT# LEFT OUTER JOIN
-            ORDERF062.OEPROC T04
+            ORDERF0062.OEPROC T04
   ON        T02.OPROC = T04.PPROC
   WHERE     T03.NURST IN ('CDU', 'CVIC', 'ICU', 'SCUJ', 'WHBC', 'PCU', 'CCU',
             'MCU')

@@ -19,9 +19,9 @@ import schedule
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
 
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-password = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+password = config['MHD']['PASS']
 
 email = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
@@ -45,12 +45,12 @@ query = "SELECT\
   ALL       ACC.ISPDATEA, ACC.DEPT, GLK.GLDESC, ACC.PATNO, PAT.PNAME, PAT.HSSVC\
 ,           ACC.ISDATE, ACC.SVCCD, CHG.DESC, (ACC.QTY), (ACC.QTY),\
             (ACC.AMT1)\
-  FROM      HOSPF062.ACCUMCHG ACC LEFT OUTER JOIN\
-            HOSPF062.PATIENTS PAT\
+  FROM      HOSPF0062.ACCUMCHG ACC LEFT OUTER JOIN\
+            HOSPF0062.PATIENTS PAT\
   ON        ACC.PATNO = PAT.PATNO LEFT OUTER JOIN\
-            HOSPF062.CHRGDESC CHG\
+            HOSPF0062.CHRGDESC CHG\
   ON        ACC.SVCCD = CHG.SVCCD LEFT OUTER JOIN\
-            HOSPF062.GLKEYSM GLK\
+            HOSPF0062.GLKEYSM GLK\
   ON        ACC.DEPT = GLK.DEPTG\
   WHERE     ACC.ISPDATEA BETWEEN '" + month + "' AND\
             '" + yesterday + "'\

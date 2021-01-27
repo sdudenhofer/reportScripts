@@ -16,9 +16,9 @@ import os
 
 config = configparser.ConfigParser()
 config.read('../config.ini')
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-pword = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+pword = config['MHD']['PASS']
 eserv = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
@@ -40,7 +40,7 @@ for doc in doctors:
     d = doc.rstrip() + "%"
     query = "SELECT t01.patient_id, t01.encounter_id, t02.pname, \
         t01.createdby_name, t01.title, t01.created_date \
-        from hospf062.cdnotetb t01 left outer join hospf062.patients t02 \
+        from hospf0062.cdnotetb t01 left outer join hospf0062.patients t02 \
         on t01.encounter_id =t02.patno and t01.patient_id = t02.hstnum \
         where t01.createdt BETWEEN '2020-08-02' \
         AND '2020-08-09' AND T01.CRTDNAME LIKE '" + d + "' order by t02.pname"
@@ -53,8 +53,8 @@ for doc in doctors:
 
 
 tran_query = "SELECT t01.dhhstno, t01.dhpatno, t03.pname, t02.phname, t01.dhfldr, t01.dhdate \
-        FROM hospf062.trdochp t01 LEFT OUTER JOIN hospf062.phymast t02 on t01.dhdrno \
-            = t02.nwdrnum LEFT OUTER JOIN hospf062.patients t03 on t01.dhhstno = t03.hstnum \
+        FROM hospf0062.trdochp t01 LEFT OUTER JOIN hospf0062.phymast t02 on t01.dhdrno \
+            = t02.nwdrnum LEFT OUTER JOIN hospf0062.patients t03 on t01.dhhstno = t03.hstnum \
             and t01.dhpatno = t03.patno \
             WHERE t01.dhdate between '2020-08-02' and '2020-08-09' and \
                 dhdrno in (485, 1765, 481, 3349, 1927, 1002, 961, 325, 1590, 1650, 1523, \

@@ -24,9 +24,9 @@ import ftplib
 
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-pword = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+pword = config['MHD']['PASS']
 fserver = config['FTP']['SERVER']
 fuser = config['FTP']['USER']
 fpass = config['FTP']['PASS']
@@ -45,14 +45,14 @@ query0 = "select t01.patno, t01.hstnum, t01.isdob, t01.sex, t01.fincl, t02.fdesc
 t01.iatme, t03.arrvd, t01.isddate, \
 t01.dtime, t05.phname, t06.phname, t08.odobtx, \
 t07.oedate, t07.oetime, t07.oproc, t01.drg, t04.drgdes, t01.diag9, t03.admhsv, t03.dischsv \
-from hospf062.patients t01 left outer join \
-hospf062.fcdesc t02 on t01.fincl =  t02.fcfincl left outer join \
-hospf062.admreg t03 on t01.patno = t03.patno and t01.hstnum = t03.hstnum left outer join \
-hospf062.drgdesc t04 on t01.drg = t04.drg left outer join \
-hospf062.phymast t05 on t01.nwrefdoc = t05.nwdrnum left outer join \
-hospf062.phymast t06 on t01.nwattphy = t06.nwdrnum left outer join \
-orderf062.oeorder t07 on t03.patno = t07.opat# left outer join \
-hospf062.username t08 on t07.ouser = t08.odobnm \
+from hospf0062.patients t01 left outer join \
+hospf0062.fcdesc t02 on t01.fincl =  t02.fcfincl left outer join \
+hospf0602.admreg t03 on t01.patno = t03.patno and t01.hstnum = t03.hstnum left outer join \
+hospf0062.drgdesc t04 on t01.drg = t04.drg left outer join \
+hospf0062.phymast t05 on t01.nwrefdoc = t05.nwdrnum left outer join \
+hospf0062.phymast t06 on t01.nwattphy = t06.nwdrnum left outer join \
+orderf0062.oeorder t07 on t03.patno = t07.opat# left outer join \
+hospf0062.username t08 on t07.ouser = t08.odobnm \
 where (t01.isadate >= '" + month + "' and t01.hssvc not in ('RAD', 'CAT', 'BBN', 'NUR', 'RE2', \
 'INF', 'LAB') and t01.nwattphy in ('235', '1628', '1388', '1961', '1544', '1414', \
 '1958','1643','1167','1906','922','1866','1953','1939','1875','1935','1968','1952','972', \
