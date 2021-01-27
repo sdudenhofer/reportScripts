@@ -15,9 +15,9 @@ import os
 
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-pwd = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+pwd = config['MHD']['PASS']
 eserv = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
@@ -41,10 +41,10 @@ for doc in doctors:
     query = "SELECT \
             T01.HSSVC, T01.HSTNUM, T02.ENCID, T01.PNAME, \
             T01.ISDOB, T02.TITL, T02.CREATEDT, T02.CRTDNAME \
-            FROM HOSPF062.PATIENTS T01 LEFT OUTER JOIN \
-            HOSPF062.CDNOTETB T02 \
+            FROM HOSPF0062.PATIENTS T01 LEFT OUTER JOIN \
+            HOSPF0062.CDNOTETB T02 \
             ON T02.ENCID = T01.PATNO LEFT OUTER JOIN \
-            HOSPF062.CDNTEATB T03 \
+            HOSPF0062.CDNTEATB T03 \
             ON T02.ENCID = T03.ENCTRID \
             AND T02.CREATEBY = T03.LSTMODBY \
             AND T03.ENCTRID = T01.PATNO \
