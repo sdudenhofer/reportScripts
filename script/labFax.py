@@ -16,9 +16,9 @@ import time
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
 
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-password = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+password = config['MHD']['PASS']
 eserv = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
@@ -35,10 +35,10 @@ writer = pd.ExcelWriter('/home/itadmin/automation/files/lab-fax-' + str(day) + '
 
 query = """
 SELECT t01.flpt#, t02.pname, t01.flor#, t04.povdsc, t01.flrcpt, t01.flsphne, t01.flstat, DATE(t01.flidt) as "Date", t01.flitm
-FROM hospf062.rrfaxlog t01 
-LEFT OUTER JOIN hospf062.patients t02 on t01.flpt# = t02.patno
-LEFT OUTER JOIN orderf062.oeorder t03 on t01.flpt# = t03.opat# and t01.flor# = t03.oord#
-LEFT OUTER JOIN orderf062.oeproc t04 on t03.oproc = t04.pproc
+FROM hospf0062.rrfaxlog t01 
+LEFT OUTER JOIN hospf0062.patients t02 on t01.flpt# = t02.patno
+LEFT OUTER JOIN orderf0062.oeorder t03 on t01.flpt# = t03.opat# and t01.flor# = t03.oord#
+LEFT OUTER JOIN orderf0062.oeproc t04 on t03.oproc = t04.pproc
 WHERE t01.flidt = CURRENT DATE-1 DAYS 
 and t03.otodpt = 'LAB' order by t01.flidt
 """

@@ -12,9 +12,9 @@ import time
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
 
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-password = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+password = config['MHD']['PASS']
 email = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
@@ -28,8 +28,8 @@ logging.basicConfig(filename='/home/itadmin/logs/noadmit.log', level=logging.DEB
 conn = pyodbc.connect(DSN=server, UID=user, PWD=password)
 cursor = conn.cursor()
 
-census_query = "select t01.PAT# from hospf062.rmbed t01\
-    inner join hospf062.patients t02 on t01.pat# = t02.patno where t02.hssvc='MIP'\
+census_query = "select t01.PAT# from hospf0062.rmbed t01\
+    inner join hospf0062.patients t02 on t01.pat# = t02.patno where t02.hssvc='MIP'\
     or t02.hssvc='SIP' or t02.hssvc='OBS' or t02.hssvc='OBI' or t02.hssvc='NUR' or\
     t02.hssvc='BBN' or t02.hssvc='ICU' or t02.hssvc='CCU' order by NURST"
 

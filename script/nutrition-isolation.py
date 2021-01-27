@@ -18,9 +18,9 @@ import logging
 
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-password = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+password = config['MHD']['PASS']
 eserv = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
@@ -39,12 +39,12 @@ day = today.strftime('%Y-%m-%d')
 
 query = "SELECT T01.NURST, T01.ROOM,  T01.BED, T01.PAT#, \
             T02.PNAME, T03.TRRECVAL, T03.TRRECDT \
-    FROM      HOSPF062.RMBED T01 INNER JOIN \
-            HOSPF062.PATIENTS T02 \
+    FROM      HOSPF0062.RMBED T01 INNER JOIN \
+            HOSPF0062.PATIENTS T02 \
     ON        T01.PAT# = T02.PATNO INNER JOIN \
-            ORDERF062.NCTRN T03 \
+            ORDERF0062.NCTRN T03 \
     ON        T03.TRPAT# = T01.PAT# INNER JOIN \
-            ORDERF062.NCPRM T04 \
+            ORDERF0062.NCPRM T04 \
     ON        T03.TRPRMID = T04.PRID \
     WHERE     T01.NURST IN ('CDU', 'CVIC', 'ICU', 'SCUJ', 'WHBC', 'PCU', 'CCU', \
             'MCU', 'NUR') \
@@ -56,8 +56,8 @@ query = "SELECT T01.NURST, T01.ROOM,  T01.BED, T01.PAT#, \
 
 query2 = """
 select t01.nurst, t01.room, t01.bed, t02.dthpatno, t03.pname, t02.dthresp, t02.dthdttm
-FROM hospf062.rmbed t01 LEFT OUTER JOIN hospf062.chpdtaph t02 on t01.pat# = t02.dthpatno
-LEFT OUTER JOIN hospf062.patients t03 on t02.dthpatno = t03.patno
+FROM hospf0062.rmbed t01 LEFT OUTER JOIN hospf0062.chpdtaph t02 on t01.pat# = t02.dthpatno
+LEFT OUTER JOIN hospf0062.patients t03 on t02.dthpatno = t03.patno
 WHERE t02.dthresp = 'Isolation' and t01.nurst != '' order by t01.nurst, t01.room, t01.bed
 """
 data = pd.read_sql(query, conn)

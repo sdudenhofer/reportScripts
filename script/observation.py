@@ -14,9 +14,9 @@ import xlrd
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
 
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-password = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+password = config['MHD']['PASS']
 eserv = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
@@ -30,7 +30,7 @@ yesterday = b.strftime("%Y-%m-%d")
 day = today.strftime("%Y-%m-%d")
 
 query = "SELECT T01.patno, t01.adate, t01.iatme, t01.isqadte, t01.iqtime, t01.nwdocnum, t01.hssvc, t02.atype, t02.asrce, t01.age, t01.fincl, t01.pname, t02.arrvd, t01.diagn, t01.hstnum \
-        FROM hospf062.patients t01 LEFT OUTER JOIN hospf062.admreg t02 on t01.patno = t02.patno and t01.hstnum = t02.hstnum \
+        FROM hospf0062.patients t01 LEFT OUTER JOIN hospf0062.admreg t02 on t01.patno = t02.patno and t01.hstnum = t02.hstnum \
         where t01.hssvc = 'OBS' and t01.isadate = '" + yesterday + "'"
 
 data = pd.read_sql(query, conn)

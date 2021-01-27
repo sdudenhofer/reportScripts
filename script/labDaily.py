@@ -15,9 +15,9 @@ import logging
 
 config = configparser.ConfigParser()
 config.read('/home/itadmin/automation/config.ini')
-server = config['AS400']['ODBC']
-user = config['AS400']['USER']
-pwd = config['AS400']['PASS']
+server = config['MHD']['ODBC']
+user = config['MHD']['USER']
+pwd = config['MHD']['PASS']
 eserv = config['OUTLOOK']['SERVER']
 euser = config['OUTLOOK']['USER']
 epass = config['OUTLOOK']['PASS']
@@ -32,9 +32,9 @@ query = "select t02.opty, t02.oproc, t03.nurst, t02.oord#, t02.opat#, t02.osdate
         t01.rhisrndt, TIME(SUBSTR(DIGITS(t01.rhrntm),1,2) CONCAT ':' CONCAT SUBSTR(DIGITS(\
         t01.rhrntm),3,2)) AS RTIME, t01.rhisvfdt, TIME(SUBSTR(DIGITS(t01.rhvftm),1,2) CONCAT ':' CONCAT SUBSTR(DIGITS(\
         t01.rhvftm),3,2)) AS VTIME, t01.rhrcby \
-    from orderf062.rh t01 LEFT OUTER JOIN \
-    orderf062.oeorder t02 on t01.rhpt# = t02.opat# and t01.rhor# = t02.oord# LEFT OUTER JOIN \
-    hospf062.rmbed t03 on t01.rhpt# = t03.pat# and t02.opat# = t03.pat# \
+    from orderf0062.rh t01 LEFT OUTER JOIN \
+    orderf0062.oeorder t02 on t01.rhpt# = t02.opat# and t01.rhor# = t02.oord# LEFT OUTER JOIN \
+    hospf0062.rmbed t03 on t01.rhpt# = t03.pat# and t02.opat# = t03.pat# \
     WHERE t02.osdate = '" + day + "' \
 	AND t02.ostime <= '400' \
     AND t02.OTODPT != 'RAD' \
