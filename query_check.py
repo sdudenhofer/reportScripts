@@ -74,11 +74,37 @@ data_drgdesc = cursor.execute(drgdesc)
 data_username = cursor.execute(username)
 data_trdochp = cursor.execute(trdochp)
 
-try:
-    data_patients.fetchall()
-    if len(data_patients)>= 0:
+def checkQuery(query):
+    if query.fetchone()[0] == 1:
         cprint(pass_test)
     else:
         cprint(fail_test)
-except pyodbc.Error as e:
-    cprint(fail_test + str(e))
+
+checkQuery(data_patients)
+checkQuery(data_rmbed)
+checkQuery(data_pathist)
+checkQuery(data_admreg)
+checkQuery(data_benefits)
+checkQuery(data_benext)
+checkQuery(data_cdnteatb)
+checkQuery(data_oeostat)
+checkQuery(data_rd)
+checkQuery(data_oeorder)
+checkQuery(data_indaccum)
+checkQuery(data_dsstat)
+checkQuery(data_patrmbdp)
+checkQuery(data_ncprm)
+checkQuery(nctrn)
+checkQuery(chpdtaph)
+checkQuery(rh)
+checkQuery(rrfaxlog)
+checkQuery(cdnotetb)
+checkQuery(rmtor)
+checkQuery(oeoproc)
+checkQuery(accumchg)
+checkQuery(chrgdesc)
+checkQuery(glkeysm)
+checkQuery(fcdesc)
+checkQuery(drgdesc)
+checkQuery(username)
+checkQuery(trdochp)
