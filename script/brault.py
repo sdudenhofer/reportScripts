@@ -1,32 +1,22 @@
 import pyodbc
 import configparser
 import pandas as pd
-import schedule
 import time
-from ftplib import FTP
+import pysftp
 import datetime
 import os
-import logging
+
 
 config = configparser.ConfigParser()
-config.read('/home/itadmin/automation/config.ini')
+config.read('D:\\2-PROD\\config.ini')
 
-logging.basicConfig(filename="/home/itadmin/logs/brault.log", format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
+# logging.basicConfig(filename="/home/itadmin/logs/brault.log", format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
 
 server = config['MHD']['ODBC']
 user = config['MHD']['USER']
 password = config['MHD']['PASS']
-for i in range(0, 10):
-    while i <= 10:
-        try:
-            conn = pyodbc.connect(DSN=server, UID=user, PWD=password)
-        except pyodbc.Error as f:
-            #errorcode_string = str(f).split(None, 1)[0]
-            logging.INFO(str(f))
-            sleep(60)
-            continue
-        break
-    break
+conn = pyodbc.connect(DSN=server, UID=user, PWD=password)
+
 fserver = config['FTP']['SERVER']
 fuser = config['FTP']['USER']
 fpass = config['FTP']['PASS']
@@ -69,11 +59,11 @@ query_demo = "select t01.patno, t01.hstnum, t01.isadate, t01.isddate, t01.pname,
 data = pd.read_sql(query_demo, conn)
 df = pd.DataFrame(data)
 
-df.to_csv('/home/itadmin/automation/files/egoDemo-' + str(demoFileDate) + '.csv', sep='|', index=False, float_format='%.f')
+df.to_csv('D:\\4-FILES\\egoDemo-' + str(demoFileDate) + '.csv', sep='|', index=False, float_format='%.f')
 
 query_census = "SELECT t01.isadate, t01.iatme, t01.isddate, t01.dtime, t01.pname,\
     t01.age, t01.sex, t02.padr1, t01.dcstat, t01.diagn, t04.phname,\
-    t04.nwdrnum, t01.hstnum, t01.patno, t01.isdob FROM hospf062.patients\
+    t04.nwdrnum, t01.hstnum, t01.patno, t01.isdob FROM hospf0062.patients\
     t01 INNER JOIN hospf0062.pathist t02 on t01.hstnum=t02.histn \
     INNER JOIN hospf0062.admreg t03 on t01.patno=t03.patno and \
     t02.histn=t03.hstnum INNER JOIN hospf0062.phymast t04 \
@@ -81,26 +71,15 @@ query_census = "SELECT t01.isadate, t01.iatme, t01.isddate, t01.dtime, t01.pname
     'EOP' and t01.isadate = '" + census_date + "'"
 
 data1 = pd.read_sql(query_census, conn)
-df1= pd.DataFrame(data1)
-df1.to_csv('/home/itadmin/automation/files/egoCensus-' + str(demoFileDate) + ".csv", sep='|', index=False, float_format='%.f')
+df1 = pd.DataFrame(data1)
+df1.to_csv('D:\\4-FILES\\egoCensus-' + str(demoFileDate) + ".csv", sep='|', index=False, float_format='%.f')
 
-connection = fserver
-ftp = FTP()
-port = 21
-username = fuser
-password = fpass
-ftp_census = "/home/itadmin/automation/files/egoCensus-" + demoFileDate + ".csv"
-ftp_demo = "/home/itadmin/automation/files/egoDemo-" + demoFileDate + ".csv"
+cnopts = pysftp.CnOpts()
+cnopts.hostkeys = None
 
-fc = open(ftp_census, 'rb')
-fd = open(ftp_demo, 'rb')
-stor_census = str("STOR egocensus_" + demoFileDate + ".csv")
-stor_demo = str("STOR egodemo_" + demoFileDate + ".csv")
-ftp.connect(connection, port)
-ftp.login(fuser, fpass)
-ftp.cwd('/Home/Mckenzie-Willamette Medical/HMS File Transfer')
-ftp.storbinary(stor_census, fc, 1024)
-fc.close()
-ftp.storbinary(stor_demo, fd, 1024)
 
-fd.close()
+with pysftp.Connection(host=fserver, username=fuser, password=fpass, cnopts=cnopts) as sftp:
+    print("Connection successfully established...")
+
+    sftp.put('D:\\4-FILES\\egoCensus-' + str(demoFileDate) + '.csv', '/Home/Mckenzie-Willamette Medical/HMS File Transfer/egoCensus-' + str(demoFileDate) + '.csv')
+    sftp.put('D:\\4-FILES\\egoDemo-' + str(demoFileDate) + '.csv', '/Home/Mckenzie-Willamette Medical/HMS File Transfer/egoDemo-' + str(demoFileDate) + '.csv')

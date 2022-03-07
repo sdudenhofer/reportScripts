@@ -1,28 +1,14 @@
 import pandas as pd
 import configparser
 import pyodbc
-import xlsxwriter
-import time
 import datetime
-from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
-from email.mime.text import MIMEText
-from email.utils import formatdate
-from email import encoders
-import smtplib
-import os
-import schedule
 from time import sleep
 
 config = configparser.ConfigParser()
-config.read('/home/itadmin/automation/config.ini')
+config.read('D:\\2-PROD\\config.ini')
 server = config['MHD']['ODBC']
 user = config['MHD']['USER']
 password = config['MHD']['PASS']
-eserv = config['OUTLOOK']['SERVER']
-euser = config['OUTLOOK']['USER']
-epass = config['OUTLOOK']['PASS']
-
 
 
 try:
@@ -49,4 +35,4 @@ and t01.orflag != '1' order by t05.nurst"
 
 data = pd.read_sql(query, conn)
 dataframe = pd.DataFrame(data)
-dataframe.to_csv('/home/itadmin/olmonitor/olmonitor.txt',  sep='|', index=False, header=False, float_format='%.f')
+dataframe.to_csv('D:\\OLMonitor\\olmonitor.txt',  sep='|', index=False, header=False, float_format='%.f')
